@@ -1,0 +1,41 @@
+version: "3"
+services:
+  tccm-api:
+    build:
+      dockerfile: ./docker/tccm-api/Dockerfile
+      context: ..
+    container_name: tccm-api
+    restart: on-failure
+    ports:
+      - "9090:80"
+    depends_on:
+      tccm-neo4j:
+        condition: service_healthy
+  tccm-neo4j:
+    image: neo4j:4.1.3
+    container_name: tccm-neo4j
+    restart: always
+    volumes:
+      - ./neo4j/logs:/logs
+      - ./neo4j/data:/data
+      - ./neo4j/plugins:/var/lib/neo4j/plugins
+      - ./neo4j/conf:/var/lib/neo4j/conf
+      - ./neo4j/import:/var/lib/neo4j/import
+      - ./neo4j/wrapper.sh:/opt/wrapper.sh
+      - ./neo4j/initialize_neo4j.sh:/opt/initialize_neo4j.sh
+      - ./neo4j/cyphers:/cyphers
+    ports:
+      - "37687:7687"
+      - "37474:7474"
+    env_file:
+      - .env.docker
+    healthcheck:
+      test: ["CMD", "wget", "-q", "http://localhost:7474", "-O", "/dev/null"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+    entrypoint: /opt/wrapper.sh
+
+volumes:
+  tccm-neo4j:
+
