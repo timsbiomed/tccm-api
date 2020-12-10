@@ -1,8 +1,10 @@
 {
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
-    "definition": "http://www.w3.org/2004/02/skos/core#definition",
-    "prefLabel": "http://www.w3.org/2004/02/skos/core#prefLabel",
-    "notation": "http://www.w3.org/2004/02/skos/core#notation"
+    "type": "@type",
+    "uri": "@id",
+    "prefLabel": "skos:prefLabel",
+    "notation": "skos:notation",
+    "definition": "skos:definition"
   }
 }
