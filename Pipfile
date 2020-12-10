@@ -14,6 +14,7 @@ pydantic = "*"
 python-dotenv = "*"
 rdflib = "*"
 prefixcommons = "*"
+aiofiles = "*"
 
 [requires]
 python_version = "3.8"
