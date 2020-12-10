@@ -278,7 +278,7 @@ dmypy.json
 .idea
 logs
 .env
-*/.env.docker
+docker/.env
 
 docker/neo4j/data
 docker/neo4j/logs
