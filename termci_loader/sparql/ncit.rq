@@ -1,0 +1,29 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ncit: <http://purl.obolibrary.org/obo/ncit#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX CS: <http://ontologies-r.us/tccm/cs>
+PREFIX termci: <https://hotecosystem.org/termci/>
+
+construct {
+    ?term rdf:type skos:Concept ;
+          skos:notation ?code ;
+          skos:definition ?def ;
+          skos:prefLabel ?pref_name ;
+          skos:broader ?sup ;
+          skos:inScheme obo:NCIT
+}
+WHERE {
+    ?term rdf:type owl:Class ;
+          obo:NCIT_NHC0 ?code ;
+          rdfs:label ?pref_name .
+
+    OPTIONAL {
+        ?term obo:IAO_0000115 ?def ;
+              rdfs:subClassOf ?sup  .
+        FILTER (?sup != owl:Thing)
+        FILTER (!isBlank(?sup))
+    }
+}
