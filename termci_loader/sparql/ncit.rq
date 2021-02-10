@@ -4,7 +4,6 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-PREFIX CS: <http://ontologies-r.us/tccm/cs>
 PREFIX termci: <https://hotecosystem.org/termci/>
 
 construct {
