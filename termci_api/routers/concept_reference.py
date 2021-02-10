@@ -2,7 +2,7 @@ from fastapi import APIRouter, Response, Request, Depends, HTTPException
 
 from urllib.parse import unquote
 
-from db.termci_graph import TermCIGraph
+from termci_api.db.termci_graph import TermCIGraph
 from termci_api.utils import decode_uri
 
 router = APIRouter(
