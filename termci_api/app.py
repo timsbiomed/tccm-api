@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from neo4j import GraphDatabase, Driver
 
 from termci_api.config import get_settings
@@ -19,6 +20,13 @@ def get_graph():
 app = FastAPI(title='TermCI (Terminology Code Index) API', dependencies=[Depends(get_graph)])
 app.include_router(concept_reference.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
 
 @app.get('/')
