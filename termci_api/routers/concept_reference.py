@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Response, Request, Depends
+from fastapi import APIRouter, Response, Request, Depends, HTTPException
 
 from urllib.parse import unquote
 
@@ -25,12 +25,12 @@ def build_jsonld_link_header(resource):
 @router.get('/{uri}')
 def get_concept_references(uri: str, request: Request, response: Response):
     graph: TermCIGraph = request.app.state.graph
+    orig_uri = uri
     uri = decode_uri(uri)
-    # node = graph.get_code_entry(unquote(uri))
     records = graph.get_concept_references(unquote(uri))
+    if not records:
+        raise HTTPException(status_code=404, detail=f"ConceptReference {orig_uri} not found.")
     node = records[0]
-    # if node is not None:
-    #     node['type'] = 'skos:Concept'
     response.headers['Link'] = build_jsonld_link_header('ConceptReference')
     return node
 

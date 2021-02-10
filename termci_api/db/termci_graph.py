@@ -44,8 +44,3 @@ class TermCIGraph:
     def get_concept_references(self, uri: str):
         with self._driver.session() as session:
             return session.read_transaction(self.get_concept_references_tx, uri)
-
-
-
-    # def get_concept(self, uri):
-    #     return NodeMatcher(self.graph).match('Concept').where(f"_.uri='{uri}'").first()
