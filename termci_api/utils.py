@@ -1,6 +1,7 @@
+from prefixcommons import contract_uri
 from rfc3986 import uri_reference, is_valid_uri
 from urllib.parse import unquote, unquote_plus
-from tccm_api.namespaces import NAMESPACES
+from termci_api.namespaces import NAMESPACES
 
 
 def decode_uri(uri: str) -> str:
@@ -15,7 +16,7 @@ def decode_uri(uri: str) -> str:
     if is_valid_uri(unq_uri, require_scheme=True, require_authority=True, require_path=True):
         return unq_uri
 
-    exp_uri = expand_curie(uri, NAMESPACES)
+    exp_uri = curie_to_uri(uri, NAMESPACES)
     if is_valid_uri(exp_uri, require_scheme=True, require_authority=True, require_path=True):
         return exp_uri
 
@@ -26,16 +27,24 @@ def decode_uri(uri: str) -> str:
     return uri
 
 
-def expand_curie(curie: str, curie_maps) -> str:
+def curie_to_uri(curie: str, curie_map) -> str:
     """
     Expands a CURIE/identifier to a URI
     """
     if curie.find(":") == -1:
         return curie
     [prefix, local_id] = curie.split(":", 1)
-    if prefix.upper() in curie_maps:
-        return curie_maps[prefix] + local_id
+    if prefix.upper() in curie_map:
+        return curie_map[prefix] + local_id
     return curie
+
+
+def uri_to_curie(uri: str, curie_map) -> str:
+    curies = contract_uri(uri, [curie_map], shortest=True)
+    if curies:
+        return curies[0]
+    else:
+        return uri
 
 
 

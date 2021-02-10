@@ -18,4 +18,22 @@ CALL n10s.nsprefixes.addFromText("
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix termci: <https://hotecosystem.org/termci/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix biolinkml: <https://w3id.org/biolink/biolinkml/> .
 ");
+
+
+// Node
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#Concept', 'ConceptReference');
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#ConceptScheme', 'ConceptSystem');
+
+// Object Properties
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#broader', 'narrower_than');
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#inScheme', 'defined_in');
+
+// Data Type Properties
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#notation', 'code');
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#prefLabel', 'designation');
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#definition', 'definition');
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#seeAlso', 'reference');

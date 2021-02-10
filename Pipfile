@@ -4,10 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
+pytest-docker = "*"
+docker-compose = "*"
 
 [packages]
 fastapi = "*"
-py2neo = "*"
 uvicorn = "*"
 rfc3986 = "*"
 pydantic = "*"
@@ -15,6 +17,8 @@ python-dotenv = "*"
 rdflib = "*"
 prefixcommons = "*"
 aiofiles = "*"
+neo4j = "*"
+pronto = "*"
 
 [requires]
 python_version = "3.8"

@@ -1,19 +1,12 @@
 from functools import lru_cache
-
-from py2neo import Graph
 from pathlib import Path
 from pydantic import BaseSettings
 
 ROOT_DIR = Path(__file__).parent.parent
 
 
-def neo4j_graph() -> Graph:
-    settings: Settings = get_settings()
-    return Graph(settings.neo4j_bolt_uri, auth=(settings.neo4j_username, settings.neo4j_password))
-
-
 class Settings(BaseSettings):
-    app_name: str = 'TCCM API'
+    app_name: str = 'TermCI API'
     neo4j_username: str
     neo4j_password: str
     neo4j_bolt_uri: str
