@@ -14,7 +14,7 @@ router = APIRouter(
 
 
 def build_jsonld_link_header(resource):
-    uri = f'/static/jsonld/jsonld_11/context/{resource}.context.jsonld'
+    uri = f'/static/jsonld/jsonld_10/context/{resource}.context.jsonld'
     params = {
         'rel': 'http://www.w3.org/ns/json-ld#context',
         'type': 'application/ld+json'
@@ -31,7 +31,7 @@ def get_concept_references(uri: str, request: Request, response: Response):
     if not records:
         raise HTTPException(status_code=404, detail=f"ConceptReference {orig_uri} not found.")
     node = records[0]
-    response.headers['Link'] = build_jsonld_link_header('termci_schema_inlined')
+    response.headers['Link'] = build_jsonld_link_header('termci_schema')
     return node
 
 
