@@ -1,20 +1,9 @@
 from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from neo4j import GraphDatabase, Driver
 
-from termci_api.config import get_settings
 from termci_api.routers import concept_reference
 from fastapi.staticfiles import StaticFiles
 from termci_api.db.termci_graph import TermCIGraph
-
-
-def get_graph():
-    settings = get_settings()
-    graph: Driver = GraphDatabase.driver(settings.neo4j_bolt_uri, auth=(settings.neo4j_username, settings.neo4j_password))
-    try:
-        yield graph
-    finally:
-        graph.close()
 
 
 app = FastAPI(title='TermCI (Terminology Code Index) API', dependencies=[Depends(get_graph)])
