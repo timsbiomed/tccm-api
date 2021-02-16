@@ -1,6 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 from pydantic import BaseSettings
+import sys
 
 ROOT_DIR = Path(__file__).parent.parent
 

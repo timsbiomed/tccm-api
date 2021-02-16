@@ -2,11 +2,8 @@ import json
 
 import pytest
 import requests
-from fastapi import FastAPI
 from requests.exceptions import ConnectionError
 from distutils import dir_util
-
-from starlette.staticfiles import StaticFiles
 
 from fastapi.testclient import TestClient
 from termci_api.app import app
@@ -23,10 +20,6 @@ def is_responsive(url):
         return False
 
 
-@pytest.fixture(scope="session")
-def docker_compose_file(pytestconfig):
-    return pytestconfig.rootpath / 'docker-compose.yml'
-
 @pytest.fixture
 def test_client():
     return TestClient(app)
@@ -41,15 +34,11 @@ def data_dir(tmp_dir, pytestconfig):
 
 @pytest.fixture(scope='session')
 def termci_graph(docker_ip, docker_services):
-    #port = docker_services.port_for('test-termci-neo4j', 7474)
-    #url = f'http://{docker_ip}:{port}'
     settings = get_settings()
     url = f"http://{settings.neo4j_host}:{settings.neo4j_http_port}"
     docker_services.wait_until_responsive(
         timeout=60.0, pause=0.1, check=lambda: is_responsive(url)
     )
-    #bolt_port = docker_services.port_for('test-termci-neo4j', 7687)
-    bolt_url = f'bolt://{settings.neo4j_host}:{settings.neo4j_bolt_port}'
     graph = TermCIGraph()
     yield graph
 
