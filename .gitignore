@@ -282,3 +282,5 @@ docker/.env
 
 docker/neo4j/data
 docker/neo4j/logs
+tests/docker/data
+tests/docker/logs
