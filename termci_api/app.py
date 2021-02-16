@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -6,9 +8,9 @@ from fastapi.staticfiles import StaticFiles
 from termci_api.db.termci_graph import TermCIGraph
 
 
-app = FastAPI(title='TermCI (Terminology Code Index) API', dependencies=[Depends(get_graph)])
+app = FastAPI(title='TermCI (Terminology Code Index) API', dependencies=[])
 app.include_router(concept_reference.router)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=Path(__file__).parent.parent/"static"), name="static")
 
 app.add_middleware(
     CORSMiddleware,

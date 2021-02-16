@@ -1,14 +1,16 @@
+from typing import Union
+
 from neo4j import Driver, GraphDatabase
 from termci_api.config import get_settings, Settings
+from contextlib import contextmanager
 
 
 class TermCIGraph:
-    def __init__(self):
-        settings: Settings = get_settings()
+    def __init__(self, settings: Settings = get_settings()):
         self.user = settings.neo4j_username
         self.password = settings.neo4j_password
-        self.uri = settings.neo4j_bolt_uri
-        self._driver: Driver = None
+        self.uri = f"bolt://{settings.neo4j_host}:{settings.neo4j_bolt_port}"
+        self._driver: Union[Driver, None] = None
 
     def connect(self):
         if not self._driver:
@@ -18,14 +20,18 @@ class TermCIGraph:
         if self._driver:
             self._driver.close()
 
+    @contextmanager
     def create_session(self):
+        if not self._driver:
+            self.connect()
         session = self._driver.session()
         try:
             yield session
         finally:
             session.close()
 
-    def get_concept_references_tx(self, tx, uri):
+    @staticmethod
+    def get_concept_references_tx(tx, uri):
         records = []
         result = tx.run("MATCH (n:ConceptReference {uri: $uri}) " 
                         "MATCH q=(n)-[:defined_in]->(s:Resource) "
