@@ -21,7 +21,10 @@ rdflib = "*"
 prefixcommons = "*"
 aiofiles = "*"
 neo4j = "*"
-pronto = "*"
+pandas = "*"
+biolinkml = "*"
+pyld = "*"
+rdflib-pyld-compat = "*"
 
 [requires]
 python_version = "3.8"
