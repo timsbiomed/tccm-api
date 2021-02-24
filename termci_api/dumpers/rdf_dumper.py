@@ -33,8 +33,11 @@ def as_rdf_graph(element: YAMLRoot, contexts: CONTEXTS_PARAM_TYPE) -> Graph:
     if isinstance(contexts, str):
         if '://' not in contexts:
             contexts = f"file://{os.path.abspath(contexts)}"
-
-    rdf_jsonld = expand(json.loads(json_dumper.dumps(element)), options=dict(expandContext=contexts))
+    json_obj = json.loads(json_dumper.dumps(element))
+    json_obj['@type'] = 'http://www.w3.org/2004/02/skos/core#ConceptScheme'
+    for i in json_obj['contents']:
+        i['@type'] = 'http://www.w3.org/2004/02/skos/core#Concept'
+    rdf_jsonld = expand(json_obj, options=dict(expandContext=contexts))
     g = rdflib_graph_from_pyld_jsonld(rdf_jsonld)
     # TODO: find the official prefix loader module.  For the moment we pull this from the namespaces module
     with open(LD_11_DIR / 'termci_namespaces.context.jsonld') as cf:

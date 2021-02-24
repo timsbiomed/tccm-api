@@ -1,0 +1,9 @@
+GET http://localhost:8000/conceptreferences/ICDO3M:800
+Accept: application/json
+
+###
+
+GET http://localhost:8000/conceptreferences/NCIT:C7227
+Accept: application/json
+
+###

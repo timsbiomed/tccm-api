@@ -35,7 +35,7 @@ class TermCIGraph:
         records = []
         result = tx.run("MATCH (n:ConceptReference {uri: $uri}) " 
                         "MATCH q=(n)-[:defined_in]->(s:Resource) "
-                        "MATCH (n)-[:narrower_than]->(p:ConceptReference) "
+                        "OPTIONAL MATCH (n)-[:narrower_than]->(p:ConceptReference) "
                         "return n, apoc.coll.toSet(COLLECT(p.uri)) as nt, s.uri as cs", uri=uri)
         for record in result:
             n, nt, cs = record
