@@ -1,9 +1,16 @@
+
+
 ## Getting Started with Docker
+
+Create a `.env` file in `/docker` directory, using the `/.env.sample` file as a template. 
+
+Then run docker
 
 ```
 cd docker; docker-compose up
 ```
 
+It will bring up two containers, one for neo4j, and the other for the api. 
 
 ### Loader
 
