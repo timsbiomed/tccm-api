@@ -35,7 +35,7 @@ def curie_to_uri(curie: str, curie_map) -> str:
         return curie
     [prefix, local_id] = curie.split(":", 1)
     if prefix.upper() in curie_map:
-        return curie_map[prefix] + local_id
+        return curie_map[prefix.upper()] + local_id
     return curie
 
 
