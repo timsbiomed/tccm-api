@@ -38,4 +38,4 @@ call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#member', 'has_member'
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#notation', 'code');
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#prefLabel', 'designation');
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#definition', 'definition');
-call n10s.mapping.add('http://www.w3.org/2004/02/skos/rdfs#seeAlso', 'reference');
+call n10s.mapping.add('http://www.w3.org/2000/01/rdf-schema#seeAlso', 'reference');
