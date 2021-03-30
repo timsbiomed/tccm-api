@@ -29,7 +29,17 @@ robot query --input <ontology.owl> --query <sparql.rq> <turtle.ttl>
 3. run this command
 
 ```
-CALL n10s.rdf.import.fetch("file://import/<file_name>", "Turtle")
+CALL n10s.rdf.import.fetch("file:///var/lib/neo4j/import/<file_name>", "Turtle", {
+    predicateExclusionList : [ "https://hotecosystem.org/termci/contents"]
+})
+```
+
+To delete triples imported from an RDF file: 
+
+```
+CALL n10s.rdf.delete.fetch("file:///var/lib/neo4j/import/<file_name>", "Turtle", {
+    predicateExclusionList : [ "https://hotecosystem.org/termci/contents"]
+}))
 ```
 
 ### DotEnv files

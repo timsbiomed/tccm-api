@@ -1,13 +1,13 @@
 from rdflib import Namespace
 from rdflib.namespace import SKOS, RDF, RDFS, OWL, XSD, DC, DCTERMS
 
-# NCIT = Namespace('http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#')
-NCIT = Namespace('http://purl.obolibrary.org/obo/NCIT_')
+NCIT = Namespace('http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#')
 OBO = Namespace('http://purl.obolibrary.org/obo/')
 HP = Namespace('http://purl.obolibrary.org/obo/HP_')
 CS = Namespace('http://termci.ontologies-r.us/CS#')
 MONDO = Namespace('http://purl.obolibrary/org/obo/MONDO_')
 ICDO3M = Namespace('https://ontologies-r.us/ontology/ICD-O-3-M/')
+SH = Namespace('http://www.w3.org/ns/shacl#')
 
 # Used by prefixcommons functions
 NAMESPACES = {

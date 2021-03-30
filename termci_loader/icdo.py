@@ -7,7 +7,7 @@ from rdflib import Graph
 
 from termci_api.termci_schema import *
 from termci_api.dumpers.rdf_dumper import as_rdf_graph
-ROOT = Path(__file__).parent.parent
+ROOT = Path(__file__).parent.parent.absolute()
 
 
 def get_icdo():
@@ -16,13 +16,13 @@ def get_icdo():
     df = pd.read_csv(open(f, 'r', encoding='utf-8'), skiprows=[0])
 
     ns = "https://ontologies-r.us/ontology/ICD-O-3-M/"
-    cs = ConceptSystem(namespace="ns", prefix="ICDO3M")
+    cs = ConceptSystem(uri=ns[:-1], namespace=ns, prefix="ICDO3M")
     cs.contents = list()
     parent = None
     for index, row in df.iterrows():
         # print(row[0], '|', row[1], '|', row[2])
         if row[1] == 'Preferred' or row[1] == '2':
-            uri = "https://ontologies-r.us/ontology/ICD-O-3-M/" + row[0].replace('/', '.')
+            uri = ns + row[0].replace('/', '.')
             cr = ConceptReference(uri=uri, code=row[0], defined_in=ns[:-1])
             cr.definition = row[2]
             if row[1] == '2':
@@ -34,7 +34,7 @@ def get_icdo():
     context = "https://termci.ontologies-r.us/static/jsonld/jsonld_10/context/termci_schema.context.jsonld"
     graph = as_rdf_graph(cs, contexts=context)
     graph.namespace_manager.bind('ICDO3M', URIRef(ns))
-    graph.serialize(destination='icdo3m.ttl', format='turtle')
+    graph.serialize(destination='icdo3m-termci.ttl', format='turtle')
 
 
 if __name__ == '__main__':

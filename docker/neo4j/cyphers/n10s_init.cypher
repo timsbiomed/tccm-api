@@ -25,15 +25,17 @@ CALL n10s.nsprefixes.addFromText("
 
 
 // Node
-call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#Concept', 'ConceptReference');
+call n10s.mapping.add('http://ww.w3.org/2004/02/skos/core#Concept', 'ConceptReference');
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#ConceptScheme', 'ConceptSystem');
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#CodeSet', 'CodeSet');
 
 // Object Properties
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#broader', 'narrower_than');
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#inScheme', 'defined_in');
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#member', 'has_member');
 
 // Data Type Properties
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#notation', 'code');
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#prefLabel', 'designation');
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#definition', 'definition');
-call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#seeAlso', 'reference');
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/rdfs#seeAlso', 'reference');

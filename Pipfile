@@ -25,6 +25,7 @@ pandas = "*"
 biolinkml = "*"
 pyld = "*"
 rdflib-pyld-compat = "*"
+owlready2 = "*"
 
 [requires]
 python_version = "3.8"
