@@ -1,8 +1,10 @@
 from typing import Union
 
 from neo4j import Driver, GraphDatabase
+
 from termci_api.config import get_settings, Settings
 from contextlib import contextmanager
+from termci_api.db.cypher_queries import *
 
 
 class TermCIGraph:
@@ -31,12 +33,10 @@ class TermCIGraph:
             session.close()
 
     @staticmethod
-    def get_concept_references_tx(tx, uri):
+    def get_concept_references_by_value_tx(tx, key: ConceptReferenceKeyName, value: str):
         records = []
-        result = tx.run("MATCH (n:ConceptReference {uri: $uri}) " 
-                        "MATCH q=(n)-[:defined_in]->(s:Resource) "
-                        "OPTIONAL MATCH (n)-[:narrower_than]->(p:ConceptReference) "
-                        "return n, apoc.coll.toSet(COLLECT(p.uri)) as nt, s.uri as cs", uri=uri)
+        query = concept_reference_query_by_value(key)
+        result = tx.run(query, value=value)
         for record in result:
             n, nt, cs = record
             node = dict(n.items())
@@ -47,6 +47,7 @@ class TermCIGraph:
             records.append(node)
         return records
 
-    def get_concept_references(self, uri: str):
+    def get_concept_references_by_value(self, key: ConceptReferenceKeyName, code: str):
         with self._driver.session() as session:
-            return session.read_transaction(self.get_concept_references_tx, uri)
+            return session.read_transaction(self.get_concept_references_by_value_tx, key, code)
+
