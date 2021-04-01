@@ -6,8 +6,8 @@ from termci_api.db.termci_graph import TermCIGraph
 from termci_api.utils import decode_uri
 
 router = APIRouter(
-    prefix='/conceptreferences',
-    tags=['ConceptReferences'],
+    prefix='/codesets',
+    tags=['CodeSets'],
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )

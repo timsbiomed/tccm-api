@@ -4,10 +4,7 @@ from urllib.parse import unquote
 
 from termci_api.db.termci_graph import TermCIGraph
 from termci_api.utils import decode_uri
-from termci_api.enums import ConceptReferenceKeyName
-
-from enum import Enum
-
+from termci_api.enums import ConceptReferenceKeyName, SearchModifier
 
 router = APIRouter(
     prefix='/conceptreferences',
@@ -27,16 +24,16 @@ def build_jsonld_link_header(resource):
 
 
 @router.get('')
-def get_concept_references(key: ConceptReferenceKeyName, value: str, request: Request, response: Response):
+def get_concept_references(key: ConceptReferenceKeyName, value: str, modifier: SearchModifier, request: Request, response: Response):
     graph: TermCIGraph = request.app.state.graph
     new_value = value
     if key == ConceptReferenceKeyName.uri:
         new_value = unquote(value)
     elif key == ConceptReferenceKeyName.curie:
         new_value = unquote(decode_uri(value))
-    records = graph.get_concept_references_by_value(key, new_value)
+    records = graph.get_concept_references_by_value(key, new_value, modifier)
     if not records:
-        raise HTTPException(status_code=404, detail=f"ConceptReference {key}={value} not found.")
+        raise HTTPException(status_code=404, detail=f"ConceptReference {key}={value}|modifier not found.")
     response.headers['Link'] = build_jsonld_link_header('termci_schema')
     return records
 
