@@ -3,7 +3,7 @@ from fastapi import APIRouter, Response, Request, Depends, HTTPException
 from urllib.parse import unquote
 
 from termci_api.db.termci_graph import TermCIGraph
-from termci_api.utils import decode_uri
+from termci_api.utils import decode_uri, build_jsonld_link_header
 from termci_api.enums import ConceptReferenceKeyName, SearchModifier
 
 router = APIRouter(
@@ -12,15 +12,6 @@ router = APIRouter(
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
-
-
-def build_jsonld_link_header(base: str, resource: str):
-    uri = f'{base}static/jsonld/jsonld_10/context/{resource}.context.jsonld'
-    params = {
-        'rel': 'http://www.w3.org/ns/json-ld#context',
-        'type': 'application/ld+json'
-    }
-    return f'<{uri}>; ' + '; '.join([f'{k}="{v}"' for k, v in params.items()])
 
 
 @router.get('')

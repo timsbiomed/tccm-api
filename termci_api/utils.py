@@ -47,4 +47,14 @@ def uri_to_curie(uri: str, curie_map) -> str:
         return uri
 
 
+def build_jsonld_link_header(base: str, resource: str):
+    uri = f'{base}static/jsonld/jsonld_10/context/{resource}.context.jsonld'
+    params = {
+        'rel': 'http://www.w3.org/ns/json-ld#context',
+        'type': 'application/ld+json'
+    }
+    return f'<{uri}>; ' + '; '.join([f'{k}="{v}"' for k, v in params.items()])
+
+
+
 
