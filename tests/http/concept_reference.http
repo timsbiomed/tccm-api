@@ -1,4 +1,4 @@
-GET {{host_port}}/conceptreferences/ICDO3M:800
+GET {{host_port}}/conceptreferences?key=curie&value=NCIT:C123456&modifier=equals
 Accept: application/json
 
 ###

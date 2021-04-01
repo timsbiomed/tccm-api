@@ -14,8 +14,8 @@ router = APIRouter(
 )
 
 
-def build_jsonld_link_header(resource):
-    uri = f'/static/jsonld/jsonld_10/context/{resource}.context.jsonld'
+def build_jsonld_link_header(base: str, resource: str):
+    uri = f'{base}static/jsonld/jsonld_10/context/{resource}.context.jsonld'
     params = {
         'rel': 'http://www.w3.org/ns/json-ld#context',
         'type': 'application/ld+json'
@@ -34,8 +34,5 @@ def get_concept_references(key: ConceptReferenceKeyName, value: str, modifier: S
     records = graph.get_concept_references_by_value(key, new_value, modifier)
     if not records:
         raise HTTPException(status_code=404, detail=f"ConceptReference {key}={value}|modifier not found.")
-    response.headers['Link'] = build_jsonld_link_header('termci_schema')
+    response.headers['Link'] = build_jsonld_link_header(str(request.base_url) + request.scope.get("root_path"), 'termci_schema')
     return records
-
-
-
