@@ -5,7 +5,7 @@ from neo4j import Driver, GraphDatabase
 from termci_api.config import get_settings, Settings
 from contextlib import contextmanager
 from termci_api.db.cypher_queries import *
-from termci_api.enums import ConceptReferenceKeyName, SearchModifier
+from termci_api.enums import ConceptReferenceKeyName, ConceptSystemKeyName, SearchModifier
 
 
 class TermCIGraph:
@@ -52,3 +52,24 @@ class TermCIGraph:
         with self._driver.session() as session:
             return session.read_transaction(self.get_concept_references_by_value_tx, key, code, modifier)
 
+    def get_code_set_by_id_tx(self, code_set_id: str):
+        records = []
+
+        return records
+
+    def get_code_set_by_id(self, code_set_id: str):
+        with self._driver.session() as session:
+            return session.read_transaction(self.get_code_set_by_id_tx, code_set_id)
+
+    @staticmethod
+    def get_concept_systems_by_value_tx(tx, key: ConceptSystemKeyName, value: str, modifier: SearchModifier):
+        records = []
+        query = concept_system_query_by_value(key, modifier)
+        result = tx.run(query, value=value)
+        for record in result:
+            records.append(record['n'])
+        return records
+
+    def get_concept_systems_by_value(self, key: ConceptSystemKeyName, value: str, modifier: SearchModifier):
+        with self._driver.session() as session:
+            return session.read_transaction(self.get_concept_systems_by_value_tx, key, value, modifier)

@@ -2,8 +2,9 @@ from fastapi import APIRouter, Response, Request, Depends, HTTPException
 
 from urllib.parse import unquote
 
+from termci_api.enums import ConceptSystemKeyName, SearchModifier
 from termci_api.db.termci_graph import TermCIGraph
-from termci_api.utils import decode_uri
+from termci_api.utils import decode_uri, build_jsonld_link_header
 
 router = APIRouter(
     prefix='/conceptsystems',
@@ -13,25 +14,23 @@ router = APIRouter(
 )
 
 
-def build_jsonld_link_header(resource):
-    uri = f'/static/jsonld/jsonld_10/context/{resource}.context.jsonld'
-    params = {
-        'rel': 'http://www.w3.org/ns/json-ld#context',
-        'type': 'application/ld+json'
-    }
-    return f'<{uri}>; ' + '; '.join([f'{k}="{v}"' for k, v in params.items()])
-
-
-@router.get('/{uri}')
-def get_concept_systems(uri: str, request: Request, response: Response):
+@router.get('')
+def get_concept_systems(key: ConceptSystemKeyName, value: str, modifier: SearchModifier, request: Request, response: Response):
     graph: TermCIGraph = request.app.state.graph
-    orig_uri = uri
-    uri = decode_uri(uri)
-    records = graph.get_concept_systems(unquote(uri))
+    records = graph.get_concept_systems_by_value(key, value, modifier)
     if not records:
-        raise HTTPException(status_code=404, detail=f"ConceptSystem {orig_uri} not found.")
-    node = records[0]
-    response.headers['Link'] = build_jsonld_link_header('termci_schema')
-    return node
+        raise HTTPException(status_code=404, detail=f"ConceptSystem {key}={value}|{modifier} not found.")
+    response.headers['Link'] = build_jsonld_link_header(str(request.base_url) + request.scope.get("root_path"), 'termci_schema')
+    return records
+
+
+@router.get('/{prefix}')
+def get_concept_reference_by_id(prefix: str, request: Request, response: Response):
+    graph: TermCIGraph = request.app.state.graph
+    records = graph.get_concept_systems_by_value(ConceptSystemKeyName.prefix, prefix, SearchModifier.equals)
+    if not records:
+        raise HTTPException(status_code=404, detail=f"ConceptReference prefix={prefix} not found.")
+    response.headers['Link'] = build_jsonld_link_header(str(request.base_url) + request.scope.get("root_path"), 'termci_schema')
+    return records[0]
 
 

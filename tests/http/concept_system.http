@@ -1,0 +1,10 @@
+
+GET {{host_port}}/conceptsystems?key=prefix&value=NCIT&modifier=equals
+Accept: application/json
+
+###
+
+GET {{host_port}}/conceptsystems/NCIT
+Accept: application/json
+
+###

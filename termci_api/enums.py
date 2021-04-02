@@ -7,9 +7,15 @@ class ConceptReferenceKeyName(str, Enum):
     code = "code"
 
 
+class ConceptSystemKeyName(str, Enum):
+    prefix = "prefix"
+    uri = "uri"
+
+
 class SearchModifier(str, Enum):
     equals = 'equals'
     starts_with = "starts_with"
     contains = "contains"
     any = "any"
     all = "all"
+
