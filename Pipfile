@@ -26,6 +26,8 @@ biolinkml = "*"
 pyld = "*"
 rdflib-pyld-compat = "*"
 owlready2 = "*"
+python-docx = "*"
+python-multipart = "*"
 
 [requires]
 python_version = "3.8"

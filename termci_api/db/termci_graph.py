@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, List
 
 from neo4j import Driver, GraphDatabase
 
@@ -48,13 +48,32 @@ class TermCIGraph:
             records.append(node)
         return records
 
-    def get_concept_references_by_value(self, key: ConceptReferenceKeyName, code: str, modifier: SearchModifier):
+    @staticmethod
+    def get_concept_references_by_values_and_concept_system_tx(tx, key: ConceptReferenceKeyName, values: List[str], concept_system: str):
+        records = []
+        query = concept_references_query_by_values_and_concept_system(key)
+        result = tx.run(query, values=values, concept_system=concept_system)
+        for record in result:
+            n, nt, cs = record
+            node = dict(n.items())
+            if len(nt) > 0:
+                node['narrower_than'] = nt
+            if cs:
+                node['defined_in'] = cs
+            records.append(node)
+        return records
+
+    def get_concept_references_by_value(self, key: ConceptReferenceKeyName, value: str, modifier: SearchModifier):
         with self._driver.session() as session:
-            return session.read_transaction(self.get_concept_references_by_value_tx, key, code, modifier)
+            return session.read_transaction(self.get_concept_references_by_value_tx, key, value, modifier)
+
+    def get_concept_references_by_values_and_concept_system(self, key: ConceptReferenceKeyName, values: List[str], concept_system: str):
+        with self._driver.session() as session:
+            return session.read_transaction(self.get_concept_references_by_values_and_concept_system_tx, key, values, concept_system)
+
 
     def get_code_set_by_id_tx(self, code_set_id: str):
         records = []
-
         return records
 
     def get_code_set_by_id(self, code_set_id: str):
