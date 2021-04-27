@@ -1,0 +1,12 @@
+id: https://examples.org/stoplights/colours_3/
+name: colours_3
+description: Stoplight colours_3 code set definition
+notes:
+  - The elipses under codes indicates that this is a sample code set for temporary use
+
+imports:
+  - prefixes
+
+default_prefix: EV
+
+descendants_of: PATO:0000322

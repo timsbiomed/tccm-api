@@ -1,0 +1,25 @@
+id: https://ccdh.cancer.gov/codesets/analyte_types
+name: analyte_types
+description: Set of codes that represent the kinds of molecular specimen analyte.
+
+imports:
+  - prefixes
+
+default_prefix: CCDH
+
+include:
+  entities:
+    namespace: NCIT
+    codes:
+      - C449
+      - C812
+      - C128274
+      - C128787
+      - C128788
+      - C156435
+      - C156436
+      - C156437
+      - C156439
+      - C163993
+      - C163994
+      - C16399523

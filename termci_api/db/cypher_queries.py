@@ -1,5 +1,5 @@
 from termci_api.enums import ConceptReferenceKeyName, ConceptSystemKeyName, SearchModifier
-
+import sys
 
 def concept_reference_query_by_value(key: ConceptReferenceKeyName, modifier: SearchModifier):
     if key == ConceptReferenceKeyName.uri or key == ConceptReferenceKeyName.curie:
@@ -71,3 +71,16 @@ def concept_system_query_by_value(key: ConceptReferenceKeyName, modifier: Search
                    "return n"
 
 
+def concept_references_query_by_descendants_of(depth: int = sys.maxsize):
+    if depth == sys.maxsize:
+        depth_str = "*1.."
+    elif depth == 1:
+        depth_str = ""
+    else:
+        depth_str = f"*1..{depth}"
+
+    return "MATCH (n:ConceptReference) " \
+           "OPTIONAL MATCH (n)-[:defined_in]->(s:Resource) " \
+           "MATCH q=(n)-[:narrower_than " + depth_str + "]->(:ConceptReference{uri: $uri}) " \
+           "OPTIONAL MATCH (n)-[:narrower_than]->(p:ConceptReference) " \
+           "return DISTINCT n, apoc.coll.toSet(COLLECT(p.uri)) as nt, s.uri as cs"

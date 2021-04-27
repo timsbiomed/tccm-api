@@ -1,0 +1,30 @@
+# curl -X 'POST'
+#  'http://127.0.0.1:8000/codesets/resolve'
+#  -H 'accept: application/json'
+#  -H 'Content-Type: multipart/form-data'
+#  -F 'file=@analyte_types.csd.yaml;type=application/x-yaml'
+POST http://127.0.0.1:8000/codesets/resolve
+Accept: application/json
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="analyte_types.csd.yaml"
+Content-Type: application/x-yaml
+
+< ../files/analyte_types.csd.yaml
+--WebAppBoundary--
+
+###
+
+POST http://127.0.0.1:8000/codesets/resolve
+Accept: application/json
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="pato_colors.csd.yaml"
+Content-Type: application/x-yaml
+
+< ../files/pato_colors.csd.yaml
+--WebAppBoundary--
+
+###

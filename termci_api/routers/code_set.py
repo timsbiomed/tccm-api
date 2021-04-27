@@ -29,6 +29,10 @@ def resolve_code_set_def(code_set_def, graph):
         codes = includes['entities']['codes']
         # resolve the codes with namespace
         code_set_res['members'] = graph.get_concept_references_by_values_and_concept_system(ConceptReferenceKeyName.code, codes, ns)
+    elif 'descendants_of' in code_set_def:
+        uri = code_set_res.pop('descendants_of')
+        uri = decode_uri(uri)
+        code_set_res['members'] = graph.get_concept_references_by_descendants_of(uri)
     return code_set_res
 
 

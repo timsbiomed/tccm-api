@@ -56,4 +56,15 @@ def build_jsonld_link_header(base: str, resource: str):
     return f'<{uri}>; ' + '; '.join([f'{k}="{v}"' for k, v in params.items()])
 
 
+def concept_references_from_results(result):
+    nodes = []
+    for record in result:
+        n, nt, cs = record
+        node = dict(n.items())
+        if len(nt) > 0:
+            node['narrower_than'] = nt
+        if cs:
+            node['defined_in'] = cs
+        nodes.append(node)
+    return nodes
 
