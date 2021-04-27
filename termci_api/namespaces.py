@@ -8,6 +8,7 @@ CS = Namespace('http://termci.ontologies-r.us/CS#')
 MONDO = Namespace('http://purl.obolibrary/org/obo/MONDO_')
 ICDO3M = Namespace('https://ontologies-r.us/ontology/ICD-O-3-M/')
 SH = Namespace('http://www.w3.org/ns/shacl#')
+PATO = Namespace('http://purl.obolibrary.org/obo/PATO_')
 
 # Used by prefixcommons functions
 NAMESPACES = {
@@ -22,5 +23,6 @@ NAMESPACES = {
     'CS': CS,
     'MONDO': MONDO,
     'ICDO3M': ICDO3M,
+    'PATO': PATO,
 }
 
