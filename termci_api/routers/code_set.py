@@ -32,7 +32,7 @@ def resolve_code_set_def(code_set_def, graph):
     elif 'descendants_of' in code_set_def:
         uri = code_set_res.pop('descendants_of')
         uri = decode_uri(uri)
-        code_set_res['members'] = graph.get_concept_references_by_descendants_of(uri)
+        code_set_res['total'], code_set_res['members'] = graph.get_concept_references_by_descendants_of(uri)
     return code_set_res
 
 
@@ -70,5 +70,5 @@ def resolve_code_set_definition(request: Request, response: Response, file: Uplo
     if request.headers['accept'] == 'application/json':
         return code_set_res
     elif request.headers['accept'] == 'application/x-yaml':
-        return yaml.dump(code_set_res)
+        return Response(content=yaml.dump(code_set_res), media_type="application/x-yaml")
 

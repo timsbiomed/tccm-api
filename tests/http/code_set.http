@@ -28,3 +28,17 @@ Content-Type: application/x-yaml
 --WebAppBoundary--
 
 ###
+
+
+POST http://127.0.0.1:8000/codesets/resolve
+Accept: application/x-yaml
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="pato_colors.csd.yaml"
+Content-Type: application/x-yaml
+
+< ../files/pato_colors.csd.yaml
+--WebAppBoundary--
+
+###

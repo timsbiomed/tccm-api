@@ -49,7 +49,17 @@ class TermCIGraph:
     def get_concept_references_by_descendants_of_tx(tx, uri: str, depth: int = sys.maxsize):
         query = concept_references_query_by_descendants_of(depth)
         result = tx.run(query, uri=uri)
-        return concept_references_from_results(result)
+        nodes = []
+        total = 0
+        for record in result:
+            n, nt, cs, total = record
+            node = dict(n.items())
+            if len(nt) > 0:
+                node['narrower_than'] = nt
+            if cs:
+                node['defined_in'] = cs
+            nodes.append(node)
+        return total, nodes
 
     @staticmethod
     def get_code_set_by_id_tx(self, code_set_id: str):

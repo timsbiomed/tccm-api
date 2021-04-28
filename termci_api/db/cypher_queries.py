@@ -79,8 +79,19 @@ def concept_references_query_by_descendants_of(depth: int = sys.maxsize):
     else:
         depth_str = f"*1..{depth}"
 
+    # MATCH q=(n)-[:narrower_than *1..]->(:ConceptReference{uri: "http://purl.obolibrary.org/obo/PATO_0000014"})
+    # WITH collect(DISTINCT n) as nList
+    # WITH nList, size(nList) as total
+    # UNWIND nList as n
+    # OPTIONAL MATCH (n)-[:narrower_than]->(p:ConceptReference)
+    # OPTIONAL MATCH (n)-[:defined_in]->(s:Resource)
+    # return n, apoc.coll.toSet(COLLECT(p.uri)) as nt, s.uri as cs, total limit 10"
+
     return "MATCH (n:ConceptReference) " \
-           "OPTIONAL MATCH (n)-[:defined_in]->(s:Resource) " \
            "MATCH q=(n)-[:narrower_than " + depth_str + "]->(:ConceptReference{uri: $uri}) " \
+           "WITH collect(DISTINCT n) as nList " \
+           "WITH nList, size(nList) as total " \
+           "UNWIND nList as n " \
            "OPTIONAL MATCH (n)-[:narrower_than]->(p:ConceptReference) " \
-           "return DISTINCT n, apoc.coll.toSet(COLLECT(p.uri)) as nt, s.uri as cs"
+           "OPTIONAL MATCH (n)-[:defined_in]->(s:Resource) " \
+           "return n, apoc.coll.toSet(COLLECT(p.uri)) as nt, s.uri as cs, total"
