@@ -2,6 +2,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import RedirectResponse
 
 from termci_api.routers import concept_reference, concept_system, code_set
 from fastapi.staticfiles import StaticFiles
@@ -24,7 +25,7 @@ app.add_middleware(
 
 @app.get('/')
 def root():
-    return {'message': 'Hello TermCI!'}
+    return RedirectResponse(url="/docs")
 
 
 @app.on_event("startup")
