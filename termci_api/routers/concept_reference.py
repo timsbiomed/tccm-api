@@ -1,6 +1,10 @@
+from typing import Optional, Union, List
+
 from fastapi import APIRouter, Response, Request, Depends, HTTPException
 
 from urllib.parse import unquote
+
+from pydantic.main import BaseModel
 
 from termci_api.db.termci_graph import TermCIGraph
 from termci_api.utils import curie_to_uri, build_jsonld_link_header
@@ -14,7 +18,17 @@ router = APIRouter(
 )
 
 
-@router.get('')
+class ConceptReference(BaseModel):
+    code: Optional[str]
+    defined_in: Optional[str]
+    uri: str
+    designation: Optional[str]
+    definition: Optional[str]
+    reference: Optional[str]
+    narrower_than: Optional[List[str]]
+
+
+@router.get('', response_model=List[ConceptReference])
 def get_concept_references(key: ConceptReferenceKeyName, value: str, modifier: SearchModifier, request: Request, response: Response):
     graph: TermCIGraph = request.app.state.graph
     new_value = value
@@ -29,7 +43,7 @@ def get_concept_references(key: ConceptReferenceKeyName, value: str, modifier: S
     return records
 
 
-@router.get('/{curie}')
+@router.get('/{curie}', response_model=ConceptReference)
 def get_concept_reference_by_id(curie: str, request: Request, response: Response):
     graph: TermCIGraph = request.app.state.graph
     new_value = unquote(curie_to_uri(curie))

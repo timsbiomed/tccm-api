@@ -7,7 +7,6 @@ CALL n10s.graphconfig.init({
   handleVocabUris: 'MAP'
 });
 
-
 CALL n10s.nsprefixes.addFromText("
 @prefix neo4voc: <http://neo4j.org/vocab/sw#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -22,7 +21,6 @@ CALL n10s.nsprefixes.addFromText("
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix biolinkml: <https://w3id.org/biolink/biolinkml/> .
 ");
-
 
 // Node
 call n10s.mapping.add('http://ww.w3.org/2004/02/skos/core#Concept', 'ConceptReference');
