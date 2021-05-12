@@ -3,7 +3,7 @@ from fastapi import APIRouter, Response, Request, Depends, HTTPException, Upload
 from urllib.parse import unquote
 
 from tccm_api.enums import ConceptReferenceKeyName
-from tccm_api.db.termci_graph import TermCIGraph
+from tccm_api.db.tccm_graph import TccmGraph
 from tccm_api.utils import decode_uri, build_jsonld_link_header
 import yaml
 from copy import deepcopy
@@ -38,7 +38,7 @@ def resolve_code_set_def(code_set_def, graph):
 
 @router.get('/{uri}')
 def get_code_set(uri: str, request: Request, response: Response):
-    graph: TermCIGraph = request.app.state.graph
+    graph: TccmGraph = request.app.state.graph
     orig_uri = uri
     uri = decode_uri(uri)
     records = graph.get_code_set(unquote(uri))
@@ -58,7 +58,7 @@ def get_code_set(uri: str, request: Request, response: Response):
                 }
             })
 def resolve_code_set_definition(request: Request, response: Response, file: UploadFile = File(...)):
-    graph: TermCIGraph = request.app.state.graph
+    graph: TccmGraph = request.app.state.graph
     value = None
     # parse the codeset definition
     if file.content_type == 'application/json':

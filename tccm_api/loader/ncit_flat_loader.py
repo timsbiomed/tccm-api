@@ -1,7 +1,6 @@
 from io import BytesIO
 from zipfile import ZipFile
 
-from pronto import Ontology, Term
 from rdflib import Graph, URIRef, Literal, RDF, SKOS, RDFS, DC
 
 from tccm_api.loader.base_loader import BaseLoader
@@ -20,8 +19,7 @@ class NcitFlatLoader(BaseLoader):
         self.graph.namespace_manager.bind('dc', DC)
         self.graph.namespace_manager.bind('ncit', NCIT)
 
-
-    def to_termci(self, see_also_format = ''):
+    def to_tccm_rdf(self, see_also_format =''):
         cs_uri = URIRef("http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl")
         self.graph.add((cs_uri, RDF.type, SKOS.ConceptScheme))
         self.graph.add((cs_uri, DC.description, Literal("A vocabulary for clinical care, translational and basic research, and public information and administrative activities.")))
@@ -49,4 +47,4 @@ class NcitFlatLoader(BaseLoader):
 
 if __name__ == '__main__':
     loader = NcitFlatLoader('https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Thesaurus.FLAT.zip')
-    loader.to_termci()
+    loader.to_tccm_rdf()

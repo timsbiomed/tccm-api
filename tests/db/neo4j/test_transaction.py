@@ -1,7 +1,7 @@
 import logging
 
 from neo4j.exceptions import ServiceUnavailable
-from tccm_api.db.termci_graph import TermCIGraph
+from tccm_api.db.tccm_graph import TccmGraph
 
 
 def get_concepts(tx):
@@ -16,7 +16,7 @@ def get_concepts(tx):
         raise
 
 
-def test_check_graph(termci_graph: TermCIGraph):
+def test_check_graph(termci_graph: TccmGraph):
     with termci_graph.create_session() as session:
         records = session.read_transaction(get_concepts)
     assert len(records) == 0

@@ -6,7 +6,7 @@ from urllib.parse import unquote
 
 from pydantic.main import BaseModel
 
-from tccm_api.db.termci_graph import TermCIGraph
+from tccm_api.db.tccm_graph import TccmGraph
 from tccm_api.utils import curie_to_uri, build_jsonld_link_header
 from tccm_api.enums import ConceptReferenceKeyName, SearchModifier
 
@@ -30,7 +30,7 @@ class ConceptReference(BaseModel):
 
 @router.get('', response_model=List[ConceptReference])
 def get_concept_references(key: ConceptReferenceKeyName, value: str, modifier: SearchModifier, request: Request, response: Response):
-    graph: TermCIGraph = request.app.state.graph
+    graph: TccmGraph = request.app.state.graph
     new_value = value
     if key == ConceptReferenceKeyName.uri:
         new_value = unquote(value)
@@ -45,7 +45,7 @@ def get_concept_references(key: ConceptReferenceKeyName, value: str, modifier: S
 
 @router.get('/{curie}', response_model=ConceptReference)
 def get_concept_reference_by_id(curie: str, request: Request, response: Response):
-    graph: TermCIGraph = request.app.state.graph
+    graph: TccmGraph = request.app.state.graph
     new_value = unquote(curie_to_uri(curie))
     records = graph.get_concept_references_by_value(ConceptReferenceKeyName.curie, new_value, SearchModifier.equals)
     if not records:

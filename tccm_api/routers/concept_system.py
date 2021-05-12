@@ -3,7 +3,7 @@ from fastapi import APIRouter, Response, Request, Depends, HTTPException
 from urllib.parse import unquote
 
 from tccm_api.enums import ConceptSystemKeyName, SearchModifier
-from tccm_api.db.termci_graph import TermCIGraph
+from tccm_api.db.tccm_graph import TccmGraph
 from tccm_api.utils import decode_uri, build_jsonld_link_header
 
 router = APIRouter(
@@ -16,7 +16,7 @@ router = APIRouter(
 
 @router.get('')
 def get_concept_systems(key: ConceptSystemKeyName, value: str, modifier: SearchModifier, request: Request, response: Response):
-    graph: TermCIGraph = request.app.state.graph
+    graph: TccmGraph = request.app.state.graph
     records = graph.get_concept_systems_by_value(key, value, modifier)
     if not records:
         raise HTTPException(status_code=404, detail=f"ConceptSystem {key}={value}|{modifier} not found.")
@@ -26,7 +26,7 @@ def get_concept_systems(key: ConceptSystemKeyName, value: str, modifier: SearchM
 
 @router.get('/{prefix}')
 def get_concept_reference_by_id(prefix: str, request: Request, response: Response):
-    graph: TermCIGraph = request.app.state.graph
+    graph: TccmGraph = request.app.state.graph
     records = graph.get_concept_systems_by_value(ConceptSystemKeyName.prefix, prefix, SearchModifier.equals)
     if not records:
         raise HTTPException(status_code=404, detail=f"ConceptReference prefix={prefix} not found.")

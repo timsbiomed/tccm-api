@@ -8,7 +8,7 @@ from tccm_api.enums import ConceptReferenceKeyName, ConceptSystemKeyName, Search
 from tccm_api.utils import *
 
 
-class TermCIGraph:
+class TccmGraph:
     def __init__(self, settings: Settings = get_settings()):
         self.user = settings.neo4j_username
         self.password = settings.neo4j_password

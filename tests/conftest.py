@@ -7,7 +7,7 @@ from distutils import dir_util
 
 from fastapi.testclient import TestClient
 from tccm_api.app import app
-from tccm_api.db.termci_graph import TermCIGraph
+from tccm_api.db.tccm_graph import TccmGraph
 from tccm_api.config import get_settings, Settings
 
 
@@ -39,7 +39,7 @@ def termci_graph(docker_ip, docker_services):
     docker_services.wait_until_responsive(
         timeout=60.0, pause=0.1, check=lambda: is_responsive(url)
     )
-    graph = TermCIGraph()
+    graph = TccmGraph()
     yield graph
 
 
