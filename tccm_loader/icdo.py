@@ -5,8 +5,8 @@ from pathlib import Path
 
 from rdflib import Graph
 
-from tccm_api.termci_schema import *
-from tccm_api.dumpers.rdf_dumper import as_rdf_graph
+from tccm_model.tccm_model import *
+from linkml.dumpers.rdf_dumper import as_rdf_graph
 ROOT = Path(__file__).parent.parent.absolute()
 
 

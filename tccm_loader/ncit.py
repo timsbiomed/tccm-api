@@ -5,8 +5,7 @@ from urllib.request import urlopen
 
 from rdflib import Graph, Literal, RDFS, RDF
 
-from tccm_api.termci_schema import *
-from tccm_api.dumpers.rdf_dumper import as_rdf_graph
+from tccm_model.tccm_model import *
 from tccm_api.namespaces import NAMESPACES, NCIT
 from utils import curie_to_uri
 

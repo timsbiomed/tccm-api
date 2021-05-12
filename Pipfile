@@ -22,12 +22,16 @@ prefixcommons = "*"
 aiofiles = "*"
 neo4j = "*"
 pandas = "*"
-biolinkml = "*"
+linkml = "*"
 pyld = "*"
 rdflib-pyld-compat = "*"
 owlready2 = "*"
 python-docx = "*"
 python-multipart = "*"
+tccm-model = {editable = true, git = "git@github.com:HOT-Ecosystem/tccm-model.git"}
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
