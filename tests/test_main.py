@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from termci_api.app import app
+from tccm_api.app import app
 
 client = TestClient(app)
 

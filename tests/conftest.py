@@ -6,9 +6,9 @@ from requests.exceptions import ConnectionError
 from distutils import dir_util
 
 from fastapi.testclient import TestClient
-from termci_api.app import app
-from termci_api.db.termci_graph import TermCIGraph
-from termci_api.config import get_settings, Settings
+from tccm_api.app import app
+from tccm_api.db.termci_graph import TermCIGraph
+from tccm_api.config import get_settings, Settings
 
 
 def is_responsive(url):

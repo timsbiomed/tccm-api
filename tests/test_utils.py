@@ -1,5 +1,5 @@
-from termci_api.namespaces import NAMESPACES
-from termci_api.utils import curie_to_uri
+from tccm_api.namespaces import NAMESPACES
+from tccm_api.utils import curie_to_uri
 
 
 def test_curie_to_uri_ncit():

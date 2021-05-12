@@ -11,7 +11,7 @@ include:
   entities:
     namespace: NCIT
     codes:
-      - C449
+      C449: "DNA"
       - C812
       - C128274
       - C128787

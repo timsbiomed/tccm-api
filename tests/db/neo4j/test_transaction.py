@@ -1,7 +1,7 @@
 import logging
 
 from neo4j.exceptions import ServiceUnavailable
-from termci_api.db.termci_graph import TermCIGraph
+from tccm_api.db.termci_graph import TermCIGraph
 
 
 def get_concepts(tx):
