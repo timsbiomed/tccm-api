@@ -7,7 +7,7 @@ ROOT_DIR = Path(__file__).parent.parent
 
 
 class Settings(BaseSettings):
-    app_name: str = 'TermCI API'
+    app_name: str = 'TCCM API'
     neo4j_username: str
     neo4j_password: str
     neo4j_bolt_port: int
