@@ -29,6 +29,7 @@ owlready2 = "*"
 python-docx = "*"
 python-multipart = "*"
 tccm-model = {editable = true, git = "git@github.com:HOT-Ecosystem/tccm-model.git"}
+py2neo = "*"
 
 [requires]
 python_version = "3.8"
