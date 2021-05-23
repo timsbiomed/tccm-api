@@ -23,7 +23,7 @@ CALL n10s.nsprefixes.addFromText("
 ");
 
 // Node
-call n10s.mapping.add('http://ww.w3.org/2004/02/skos/core#Concept', 'ConceptReference');
+call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#Concept', 'ConceptReference');
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#ConceptScheme', 'ConceptSystem');
 call n10s.mapping.add('http://www.w3.org/2004/02/skos/core#CodeSet', 'CodeSet');
 
