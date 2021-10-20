@@ -2,9 +2,10 @@
 
 """The setup module."""
 
-import setuptools
+from setuptools import setup, find_packages
 
 if __name__ == '__main__':
-    setuptools.setup(
-        packages=['tccm_api', 'tccm_loader']
+    setup(
+        # packages=['tccm_api', 'tccm_loader']  # didn't include sub-packages
+        packages=find_packages()
     )
