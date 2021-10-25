@@ -1,5 +1,4 @@
 from typing import Union, List
-import sys
 from neo4j import Driver, GraphDatabase
 from tccm_api.config import get_settings, Settings
 from contextlib import contextmanager
@@ -9,7 +8,9 @@ from tccm_api.utils import *
 
 
 class TccmGraph:
-    def __init__(self, settings: Settings = get_settings()):
+    def __init__(self, settings: Settings = None):
+        if not settings:
+            settings = get_settings()
         self.user = settings.neo4j_username
         self.password = settings.neo4j_password
         self.uri = f"bolt://{settings.neo4j_host}:{settings.neo4j_bolt_port}"
