@@ -28,7 +28,10 @@ class ConceptReference(BaseModel):
     narrower_than: Optional[List[str]]
 
 
-@router.get('', response_model=List[ConceptReference])
+@router.get(
+    '',
+    description='Get terminological info for enum val',
+    response_model=List[ConceptReference])
 def get_concept_references(key: ConceptReferenceKeyName, value: str, modifier: SearchModifier, request: Request, response: Response):
     graph: TccmGraph = request.app.state.graph
     new_value = value
@@ -43,7 +46,10 @@ def get_concept_references(key: ConceptReferenceKeyName, value: str, modifier: S
     return records
 
 
-@router.get('/{curie}', response_model=ConceptReference)
+@router.get(
+    '/{curie}',
+    description='Get terminological info for enum val, using CURIE',
+    response_model=ConceptReference)
 def get_concept_reference_by_id(curie: str, request: Request, response: Response):
     graph: TccmGraph = request.app.state.graph
     new_value = unquote(curie_to_uri(curie))
