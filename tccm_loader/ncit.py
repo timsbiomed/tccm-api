@@ -7,7 +7,7 @@ from rdflib import Graph, Literal, RDFS, RDF
 
 from tccm_model.tccm_model import *
 from tccm_api.namespaces import NAMESPACES, NCIT
-from utils import curie_to_uri
+from tccm_api.utils import curie_to_uri
 
 ROOT = Path(__file__).parent.parent
 

@@ -9,6 +9,7 @@ from tccm_api.utils import decode_uri, build_jsonld_link_header
 import yaml
 from copy import deepcopy
 
+
 router = APIRouter(
     prefix='/codesets',
     tags=['CodeSets'],
@@ -18,7 +19,7 @@ router = APIRouter(
 
 
 def parse_code_set_def_yaml(yaml_str):
-    code_set_def = yaml.safe_load(yaml_str)
+    code_set_def = yaml.safe_load(yaml_str)  # TODO: Does this return a dict?
     return code_set_def
 
 
@@ -35,6 +36,19 @@ def resolve_code_set_def(code_set_def, graph):
         uri = decode_uri(uri)
         code_set_res['total'], code_set_res['members'] = graph.get_concept_references_by_descendants_of(uri)
     return code_set_res
+
+
+# TODO: copy/pasted from conceptRef endpoint
+#  - request and response are required params?
+@router.get('')
+def get_concept_systems(request: Request, response: Response):
+    graph: TccmGraph = request.app.state.graph
+    records = ''
+    # records = graph.get_concept_systems_by_value(key, value, modifier)
+    # if not records:
+    #     raise HTTPException(status_code=404, detail=f"ConceptSystem {key}={value}|{modifier} not found.")
+    # response.headers['Link'] = build_jsonld_link_header(str(request.base_url) + request.scope.get("root_path"), 'termci_schema')
+    return records
 
 
 @router.get('/{uri}')

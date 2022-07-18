@@ -18,6 +18,7 @@ router = APIRouter(
 )
 
 
+# TODO: I think this should be imported from `tccm_model`; maybe it was defined here temporarily for speedy development.
 class ConceptReference(BaseModel):
     code: Optional[str]
     defined_in: Optional[str]
